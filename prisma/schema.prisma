@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Doctor {
+  id            String   @id @default(cuid())
+  name          String
+  email         String   @unique
+  phone         String?
+  specialization String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  appointments  Appointment[]
+  
+  @@map("doctors")
+}
+
+model Patient {
+  id            String   @id @default(cuid())
+  name          String
+  age           Int
+  address       String?
+  caseCategory  CaseCategory
+  contactNo     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  appointments  Appointment[]
+  
+  @@map("patients")
+}
+
+model Appointment {
+  id              String            @id @default(cuid())
+  doctorId        String
+  patientId       String
+  caseDescription String?
+  appointmentDate DateTime
+  status          AppointmentStatus  @default(SCHEDULED)
+  charge          Decimal?          @db.Decimal(10, 2)
+  notificationSent Boolean          @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  doctor          Doctor            @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  patient         Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  
+  @@map("appointments")
+}
+
+enum CaseCategory {
+  HAIR
+  SKIN
+  MOLES
+  HAIR_REMOVAL
+  HYDRAFACIAL
+  WEIGHT_LOSS
+  OTHER
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
