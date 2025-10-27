@@ -436,7 +436,9 @@ export default function AppointmentsPage() {
                   patientId: selectedAppointment.patientId,
                   caseDescription:
                     selectedAppointment.caseDescription || undefined,
-                  appointmentDate: selectedAppointment.appointmentDate,
+                  appointmentDate: new Date(
+                    selectedAppointment.appointmentDate
+                  ).toISOString(),
                   status: selectedAppointment.status as
                     | "SCHEDULED"
                     | "COMPLETED"
