@@ -19,9 +19,7 @@ export const patientSchema = z.object({
     .min(1, "Age must be at least 1")
     .max(120, "Age must be less than 120"),
   address: z.string().optional(),
-  caseCategory: z.nativeEnum(CaseCategory, {
-    errorMap: () => ({ message: "Please select a valid case category" }),
-  }),
+  caseCategory: z.nativeEnum(CaseCategory),
   contactNo: z.string().min(10, "Contact number must be at least 10 digits"),
 });
 
@@ -36,4 +34,3 @@ export const caseCategoryLabels = {
   [CaseCategory.WEIGHT_LOSS]: "Weight Loss",
   [CaseCategory.OTHER]: "Other",
 } as const;
-

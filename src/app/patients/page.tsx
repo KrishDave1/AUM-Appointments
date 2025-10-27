@@ -184,7 +184,24 @@ export default function PatientsPage() {
         <PatientForm
           onSubmit={handleSubmit}
           onCancel={handleCancel}
-          initialData={selectedPatient || undefined}
+          initialData={
+            selectedPatient
+              ? {
+                  name: selectedPatient.name,
+                  age: selectedPatient.age,
+                  address: selectedPatient.address || undefined,
+                  caseCategory: selectedPatient.caseCategory as
+                    | "HAIR"
+                    | "SKIN"
+                    | "MOLES"
+                    | "HAIR_REMOVAL"
+                    | "HYDRAFACIAL"
+                    | "WEIGHT_LOSS"
+                    | "OTHER",
+                  contactNo: selectedPatient.contactNo,
+                }
+              : undefined
+          }
           isLoading={isSubmitting}
         />
       )}
