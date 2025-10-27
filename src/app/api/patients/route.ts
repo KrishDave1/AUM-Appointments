@@ -25,7 +25,13 @@ export async function POST(request: NextRequest) {
     const validatedData = patientSchema.parse(body);
 
     const patient = await prisma.patient.create({
-      data: validatedData,
+      data: {
+        ...validatedData,
+        email:
+          validatedData.email && validatedData.email !== ""
+            ? validatedData.email
+            : null,
+      },
     });
 
     return NextResponse.json(patient, { status: 201 });
@@ -43,4 +49,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

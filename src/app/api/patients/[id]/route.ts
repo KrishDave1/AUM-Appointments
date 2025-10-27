@@ -37,7 +37,13 @@ export async function PUT(
 
     const patient = await prisma.patient.update({
       where: { id },
-      data: validatedData,
+      data: {
+        ...validatedData,
+        email:
+          validatedData.email && validatedData.email !== ""
+            ? validatedData.email
+            : null,
+      },
     });
 
     return NextResponse.json(patient);

@@ -40,6 +40,7 @@ export type PatientMinAggregateOutputType = {
   address: string | null
   caseCategory: $Enums.CaseCategory | null
   contactNo: string | null
+  email: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,6 +52,7 @@ export type PatientMaxAggregateOutputType = {
   address: string | null
   caseCategory: $Enums.CaseCategory | null
   contactNo: string | null
+  email: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,6 +64,7 @@ export type PatientCountAggregateOutputType = {
   address: number
   caseCategory: number
   contactNo: number
+  email: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -83,6 +86,7 @@ export type PatientMinAggregateInputType = {
   address?: true
   caseCategory?: true
   contactNo?: true
+  email?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -94,6 +98,7 @@ export type PatientMaxAggregateInputType = {
   address?: true
   caseCategory?: true
   contactNo?: true
+  email?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +110,7 @@ export type PatientCountAggregateInputType = {
   address?: true
   caseCategory?: true
   contactNo?: true
+  email?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -203,6 +209,7 @@ export type PatientGroupByOutputType = {
   address: string | null
   caseCategory: $Enums.CaseCategory
   contactNo: string
+  email: string | null
   createdAt: Date
   updatedAt: Date
   _count: PatientCountAggregateOutputType | null
@@ -237,6 +244,7 @@ export type PatientWhereInput = {
   address?: Prisma.StringNullableFilter<"Patient"> | string | null
   caseCategory?: Prisma.EnumCaseCategoryFilter<"Patient"> | $Enums.CaseCategory
   contactNo?: Prisma.StringFilter<"Patient"> | string
+  email?: Prisma.StringNullableFilter<"Patient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   appointments?: Prisma.AppointmentListRelationFilter
@@ -249,6 +257,7 @@ export type PatientOrderByWithRelationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   caseCategory?: Prisma.SortOrder
   contactNo?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   appointments?: Prisma.AppointmentOrderByRelationAggregateInput
@@ -264,6 +273,7 @@ export type PatientWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"Patient"> | string | null
   caseCategory?: Prisma.EnumCaseCategoryFilter<"Patient"> | $Enums.CaseCategory
   contactNo?: Prisma.StringFilter<"Patient"> | string
+  email?: Prisma.StringNullableFilter<"Patient"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Patient"> | Date | string
   appointments?: Prisma.AppointmentListRelationFilter
@@ -276,6 +286,7 @@ export type PatientOrderByWithAggregationInput = {
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   caseCategory?: Prisma.SortOrder
   contactNo?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PatientCountOrderByAggregateInput
@@ -295,6 +306,7 @@ export type PatientScalarWhereWithAggregatesInput = {
   address?: Prisma.StringNullableWithAggregatesFilter<"Patient"> | string | null
   caseCategory?: Prisma.EnumCaseCategoryWithAggregatesFilter<"Patient"> | $Enums.CaseCategory
   contactNo?: Prisma.StringWithAggregatesFilter<"Patient"> | string
+  email?: Prisma.StringNullableWithAggregatesFilter<"Patient"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Patient"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Patient"> | Date | string
 }
@@ -306,6 +318,7 @@ export type PatientCreateInput = {
   address?: string | null
   caseCategory: $Enums.CaseCategory
   contactNo: string
+  email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentCreateNestedManyWithoutPatientInput
@@ -318,6 +331,7 @@ export type PatientUncheckedCreateInput = {
   address?: string | null
   caseCategory: $Enums.CaseCategory
   contactNo: string
+  email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutPatientInput
@@ -330,6 +344,7 @@ export type PatientUpdateInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   caseCategory?: Prisma.EnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory
   contactNo?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUpdateManyWithoutPatientNestedInput
@@ -342,6 +357,7 @@ export type PatientUncheckedUpdateInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   caseCategory?: Prisma.EnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory
   contactNo?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutPatientNestedInput
@@ -354,6 +370,7 @@ export type PatientCreateManyInput = {
   address?: string | null
   caseCategory: $Enums.CaseCategory
   contactNo: string
+  email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -365,6 +382,7 @@ export type PatientUpdateManyMutationInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   caseCategory?: Prisma.EnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory
   contactNo?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,6 +394,7 @@ export type PatientUncheckedUpdateManyInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   caseCategory?: Prisma.EnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory
   contactNo?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -387,6 +406,7 @@ export type PatientCountOrderByAggregateInput = {
   address?: Prisma.SortOrder
   caseCategory?: Prisma.SortOrder
   contactNo?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -402,6 +422,7 @@ export type PatientMaxOrderByAggregateInput = {
   address?: Prisma.SortOrder
   caseCategory?: Prisma.SortOrder
   contactNo?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -413,6 +434,7 @@ export type PatientMinOrderByAggregateInput = {
   address?: Prisma.SortOrder
   caseCategory?: Prisma.SortOrder
   contactNo?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -459,6 +481,7 @@ export type PatientCreateWithoutAppointmentsInput = {
   address?: string | null
   caseCategory: $Enums.CaseCategory
   contactNo: string
+  email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -470,6 +493,7 @@ export type PatientUncheckedCreateWithoutAppointmentsInput = {
   address?: string | null
   caseCategory: $Enums.CaseCategory
   contactNo: string
+  email?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -497,6 +521,7 @@ export type PatientUpdateWithoutAppointmentsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   caseCategory?: Prisma.EnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory
   contactNo?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -508,6 +533,7 @@ export type PatientUncheckedUpdateWithoutAppointmentsInput = {
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   caseCategory?: Prisma.EnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory
   contactNo?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -550,6 +576,7 @@ export type PatientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   address?: boolean
   caseCategory?: boolean
   contactNo?: boolean
+  email?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   appointments?: boolean | Prisma.Patient$appointmentsArgs<ExtArgs>
@@ -563,6 +590,7 @@ export type PatientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   address?: boolean
   caseCategory?: boolean
   contactNo?: boolean
+  email?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["patient"]>
@@ -574,6 +602,7 @@ export type PatientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   address?: boolean
   caseCategory?: boolean
   contactNo?: boolean
+  email?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["patient"]>
@@ -585,11 +614,12 @@ export type PatientSelectScalar = {
   address?: boolean
   caseCategory?: boolean
   contactNo?: boolean
+  email?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PatientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "age" | "address" | "caseCategory" | "contactNo" | "createdAt" | "updatedAt", ExtArgs["result"]["patient"]>
+export type PatientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "age" | "address" | "caseCategory" | "contactNo" | "email" | "createdAt" | "updatedAt", ExtArgs["result"]["patient"]>
 export type PatientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   appointments?: boolean | Prisma.Patient$appointmentsArgs<ExtArgs>
   _count?: boolean | Prisma.PatientCountOutputTypeDefaultArgs<ExtArgs>
@@ -609,6 +639,7 @@ export type $PatientPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     address: string | null
     caseCategory: $Enums.CaseCategory
     contactNo: string
+    email: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["patient"]>
@@ -1041,6 +1072,7 @@ export interface PatientFieldRefs {
   readonly address: Prisma.FieldRef<"Patient", 'String'>
   readonly caseCategory: Prisma.FieldRef<"Patient", 'CaseCategory'>
   readonly contactNo: Prisma.FieldRef<"Patient", 'String'>
+  readonly email: Prisma.FieldRef<"Patient", 'String'>
   readonly createdAt: Prisma.FieldRef<"Patient", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Patient", 'DateTime'>
 }

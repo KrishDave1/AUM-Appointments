@@ -21,6 +21,7 @@ export const patientSchema = z.object({
   address: z.string().optional(),
   caseCategory: z.nativeEnum(CaseCategory),
   contactNo: z.string().min(10, "Contact number must be at least 10 digits"),
+  email: z.string().email("Invalid email address").optional().or(z.literal("")),
 });
 
 export type PatientFormData = z.infer<typeof patientSchema>;

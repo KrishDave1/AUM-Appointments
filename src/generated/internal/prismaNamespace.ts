@@ -692,6 +692,7 @@ export const PatientScalarFieldEnum = {
   address: 'address',
   caseCategory: 'caseCategory',
   contactNo: 'contactNo',
+  email: 'email',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

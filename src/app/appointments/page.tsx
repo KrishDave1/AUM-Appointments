@@ -15,6 +15,7 @@ import {
   statusLabels,
   statusColors,
 } from "@/types/appointment";
+import { caseCategoryLabels } from "@/types/patient";
 import {
   ArrowLeft,
   Calendar,
@@ -35,7 +36,7 @@ interface Appointment {
   status: string;
   charge?: number;
   doctor: { name: string };
-  patient: { name: string };
+  patient: { name: string; caseCategory: string };
 }
 
 interface Patient {
@@ -329,6 +330,9 @@ export default function AppointmentsPage() {
                         Patient
                       </th>
                       <th className="text-left py-3 px-4 font-medium text-gray-700">
+                        Case Category
+                      </th>
+                      <th className="text-left py-3 px-4 font-medium text-gray-700">
                         Doctor
                       </th>
                       <th className="text-left py-3 px-4 font-medium text-gray-700">
@@ -353,6 +357,16 @@ export default function AppointmentsPage() {
                       >
                         <td className="py-3 px-4 font-medium text-gray-900">
                           {appointment.patient.name}
+                        </td>
+                        <td className="py-3 px-4">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
+                            {
+                              caseCategoryLabels[
+                                appointment.patient
+                                  .caseCategory as keyof typeof caseCategoryLabels
+                              ]
+                            }
+                          </span>
                         </td>
                         <td className="py-3 px-4 text-gray-600">
                           {appointment.doctor.name}
