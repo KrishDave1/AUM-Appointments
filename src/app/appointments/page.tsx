@@ -32,7 +32,7 @@ interface Appointment {
   doctorId: string;
   patientId: string;
   caseDescription?: string;
-  appointmentDate: string;
+  appointmentDate: Date;
   status: string;
   charge?: number;
   doctor: { name: string };
@@ -436,9 +436,9 @@ export default function AppointmentsPage() {
                   patientId: selectedAppointment.patientId,
                   caseDescription:
                     selectedAppointment.caseDescription || undefined,
-                  appointmentDate: new Date(
-                    selectedAppointment.appointmentDate
-                  ).toISOString(),
+                  appointmentDate: selectedAppointment.appointmentDate
+                  ? new Date(selectedAppointment.appointmentDate).toISOString()
+                  : "",
                   status: selectedAppointment.status as
                     | "SCHEDULED"
                     | "COMPLETED"

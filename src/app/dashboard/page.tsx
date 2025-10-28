@@ -16,18 +16,19 @@ import Link from "next/link";
 
 interface Appointment {
   id: string;
-  appointmentDate: string;
+  appointmentDate: Date;
   status: string;
   charge?: number;
   doctor: { name: string };
   patient: { name: string; caseCategory: string };
+  notificationSent?: boolean;
 }
 
 interface Patient {
   id: string;
   name: string;
   caseCategory: string;
-  createdAt: string;
+  createdAt: Date;
 }
 
 export default function Dashboard() {

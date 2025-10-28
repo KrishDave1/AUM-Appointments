@@ -11,10 +11,11 @@ export type AppointmentStatusType =
   (typeof AppointmentStatus)[keyof typeof AppointmentStatus];
 
 export const appointmentSchema = z.object({
+  id: z.string().optional(),
   doctorId: z.string().min(1, "Doctor ID is required"),
   patientId: z.string().min(1, "Patient ID is required"),
   caseDescription: z.string().optional(),
-  appointmentDate: z.coerce.date(),
+  appointmentDate: z.string().min(1, "Appointment date is required"),
   status: z.nativeEnum(AppointmentStatus).optional(),
   charge: z.number().min(0).optional(),
 });
