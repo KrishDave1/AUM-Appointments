@@ -1,6 +1,5 @@
 import "dotenv/config";
 import cron from "node-cron";
-import { prisma } from "../lib/db.js";
 import { sendSMS } from "../lib/sms.js";
 import { getTodaysAppointments } from "../lib/db.js";
 
