@@ -3,7 +3,7 @@ import cron from "node-cron";
 import { sendSMS } from "../lib/sms.js";
 import { getTodaysAppointments } from "../lib/db.js";
 
-const VERIFIED_NUMBERS = ["9979872572", "9624517000"];
+const VERIFIED_NUMBERS = ["9979872572", "9624517000", "9427611557"];
 
 async function notifyAppointments() {
   console.log("📅 Checking today's appointments...");
