@@ -1,49 +1,47 @@
-import { prisma } from "@/lib/db";
-import { sendSMS } from "@/lib/sms";
+import "dotenv/config";
+import cron from "node-cron";
+import { prisma } from "../lib/db.js";
+import { sendSMS } from "../lib/sms.js";
+import { getTodaysAppointments } from "../lib/db.js";
+
+const VERIFIED_NUMBERS = ["9979872572", "9624517000"];
 
 async function notifyAppointments() {
-  console.log("📅 Checking upcoming appointments...");
+  console.log("📅 Checking today's appointments...");
 
-  const now = new Date();
-  const tomorrow = new Date(now);
-  tomorrow.setDate(now.getDate() + 1);
-
-  // Fetch appointments scheduled within the next 24 hours
-  const appointments = await prisma.appointment.findMany({
-    where: {
-      appointmentDate: {
-        gte: now,
-        lt: tomorrow,
-      },
-    },
-    include: {
-      doctor: true,
-      patient: true,
-    },
-  });
+  const appointments = await getTodaysAppointments();
 
   if (appointments.length === 0) {
-    console.log("No appointments in the next 24 hours.");
+    console.log("📭 No appointments today.");
     return;
   }
 
-  for (const appt of appointments) {
-    const message = `🏥 AUM Skin Hair Laser Clinic
+  for (const appointment of appointments) {
+    const message = `🏥 *Aum Skin Hair Laser Clinic*
 
-👩‍⚕️ Appointment Reminder:
-Doctor: ${appt.doctor.name}
-Date: ${appt.appointmentDate.toLocaleString()}
-Case: ${appt.caseDescription ?? "N/A"}
+👩 *Appointment Reminder:*
+Doctor: ${appointment.doctor?.name ?? "N/A"}
+Patient: ${appointment.patient?.name ?? "N/A"}
+Contact No: ${appointment.patient?.contactNo ?? "N/A"}
+Case Category: ${appointment.patient?.caseCategory ?? "N/A"}
+Date: *${appointment.appointmentDate.toLocaleString()}*
+Case Description: ${appointment.caseDescription ?? "N/A"}
 
 Please arrive 10 minutes early.`;
 
-    try {
-      await sendSMS(message, appt.patient.contactNo);
-      console.log(`✅ Reminder sent to ${appt.patient.contactNo}`);
-    } catch (error) {
-      console.error(`❌ Failed to send reminder to ${appt.patient.contactNo}:`, error);
+    for (const number of VERIFIED_NUMBERS) {
+      try {
+        await sendSMS(message, number);
+        console.log(`✅ Reminder sent to ${number} for ${appointment.patient?.name}`);
+      } catch (error) {
+        console.error(`❌ Failed to send reminder to ${number}:`, error);
+      }
     }
   }
 }
 
-notifyAppointments().finally(() => process.exit());
+// ⏰ Run every day at 8 AM
+cron.schedule("* * * * *", () => {
+  console.log("📅 Appointment notifier started ... running daily at 8 AM");
+  notifyAppointments();
+});
