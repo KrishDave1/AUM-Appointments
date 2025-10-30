@@ -1,7 +1,8 @@
-import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { z } from "zod";
 import {
   Card,
   CardContent,
@@ -9,18 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  patientSchema,
-  PatientFormData,
-  CaseCategory,
-  caseCategoryLabels,
-} from "@/types/patient";
+import { patientSchema, caseCategoryLabels } from "@/types/patient";
 import { Plus, X } from "lucide-react";
 
 interface PatientFormProps {
-  onSubmit: (data: PatientFormData) => Promise<void>;
+  onSubmit: (data: z.infer<typeof patientSchema>) => Promise<void>;
   onCancel: () => void;
-  initialData?: Partial<PatientFormData>;
+  initialData?: Partial<z.infer<typeof patientSchema>>;
   isLoading?: boolean;
 }
 
@@ -35,12 +31,12 @@ export default function PatientForm({
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<PatientFormData>({
+  } = useForm<z.infer<typeof patientSchema>>({
     resolver: zodResolver(patientSchema),
     defaultValues: initialData,
   });
 
-  const handleFormSubmit = async (data: PatientFormData) => {
+  const handleFormSubmit = async (data: z.infer<typeof patientSchema>) => {
     try {
       await onSubmit(data);
       reset();

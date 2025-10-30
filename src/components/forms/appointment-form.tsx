@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,6 @@ import {
 import {
   appointmentSchema,
   AppointmentFormData,
-  AppointmentStatus,
   statusLabels,
 } from "@/types/appointment";
 import { Plus, X } from "lucide-react";
@@ -51,7 +49,6 @@ export default function AppointmentForm({
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
   } = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema),
     defaultValues: initialData
@@ -76,9 +73,6 @@ export default function AppointmentForm({
       console.error("Form submission error:", error);
     }
   };
-
-  const selectedDoctor = watch("doctorId");
-  const selectedPatient = watch("patientId");
 
   return (
     <Card className="w-full max-w-2xl mx-auto">

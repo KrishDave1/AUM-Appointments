@@ -22,7 +22,6 @@ import {
   Plus,
   Edit,
   Trash2,
-  Eye,
   UserPlus,
 } from "lucide-react";
 import DoctorModal from "@/components/modals/doctor-modal";

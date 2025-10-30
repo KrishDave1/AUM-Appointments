@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { doctorSchema } from "@/types/doctor";
-import bcrypt from "bcryptjs";
 
 export async function GET() {
   try {

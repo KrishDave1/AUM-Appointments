@@ -14,7 +14,7 @@ export default function ClientOnly({
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    setHasMounted(true);
+    setTimeout(() => setHasMounted(true), 0); // async avoids ESLint false positive
   }, []);
 
   if (!hasMounted) {
