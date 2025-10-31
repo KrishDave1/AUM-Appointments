@@ -40,7 +40,7 @@ Please arrive 10 minutes early.`;
 }
 
 // ⏰ Run every day at 8 AM
-cron.schedule("* * * * *", () => {
+cron.schedule("30 2 * * *", () => {
   console.log("📅 Appointment notifier started ... running daily at 8 AM");
   notifyAppointments();
 });
