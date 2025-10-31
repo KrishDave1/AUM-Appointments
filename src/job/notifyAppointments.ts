@@ -1,7 +1,7 @@
 import "dotenv/config";
 // import cron from "node-cron";
-import { sendSMS } from "../lib/sms.js";
-import { getTodaysAppointments } from "../lib/db.js";
+import { sendSMS } from "../lib/sms";
+import { getTodaysAppointments } from "../lib/db";
 
 const VERIFIED_NUMBERS = ["9979872572", "9624517000", "9427611557"];
 
