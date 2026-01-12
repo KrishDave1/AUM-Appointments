@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { appointmentSchema, MAX_PATIENTS_PER_SLOT } from "@/types/appointment";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const appointments = await prisma.appointment.findMany({

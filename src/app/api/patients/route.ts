@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { patientSchema } from "@/types/patient";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const patients = await prisma.patient.findMany({
