@@ -41,3 +41,32 @@ export const getTodaysAppointments = async () => {
     },
   });
 };
+
+export const getTomorrowsAppointments = async () => {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
+  const startOfDay = new Date(tomorrow.setHours(0, 0, 0, 0));
+  const endOfDay = new Date(tomorrow.setHours(23, 59, 59, 999));
+
+  return await prisma.appointment.findMany({
+    where: {
+      appointmentDate: {
+        gte: startOfDay,
+        lte: endOfDay,
+      },
+      status: {
+        not: "CANCELLED"
+      }
+    },
+    include: {
+      doctor: true,
+      patient: true,
+    },
+    orderBy: [
+      { doctor: { name: 'asc' } },
+      { appointmentDate: 'asc' }
+    ],
+  });
+};
