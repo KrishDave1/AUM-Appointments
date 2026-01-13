@@ -26,64 +26,46 @@ export async function GET(request: Request) {
       return NextResponse.json({ message: 'No appointments for tomorrow' });
     }
 
-    // Group appointments by Doctor
-    const appointmentsByDoctor: Record<string, typeof appointments> = {};
-    
-    for (const appt of appointments) {
-      const docName = appt.doctor?.name || "Unknown Doctor";
-      if (!appointmentsByDoctor[docName]) {
-        appointmentsByDoctor[docName] = [];
-      }
-      appointmentsByDoctor[docName].push(appt);
-    }
-
-    // specific date for header
-    const dateString = appointments[0].appointmentDate.toLocaleDateString('en-IN', { 
-      weekday: 'short', 
-      day: 'numeric', 
-      month: 'short',
-      timeZone: 'Asia/Kolkata'
-    });
-
-    let message = `🏥 *Daily Digest for ${dateString}*\n\n`;
-
-    // Build the digest message
-    for (const [docName, docAppts] of Object.entries(appointmentsByDoctor)) {
-      message += `👨‍⚕️ *${docName}* (${docAppts.length})\n`;
-      
-      for (const appt of docAppts) {
-        const time = appt.appointmentDate.toLocaleTimeString('en-IN', {
-          hour: '2-digit',
-          minute: '2-digit',
-          timeZone: 'Asia/Kolkata'
-        });
-        const patName = appt.patient?.name || "Unknown";
-        const category = appt.patient?.caseCategory || "-";
-        const contact = appt.patient?.contactNo || "";
-        
-        message += `• ${time} - ${patName} (${category}) ${contact}\n`;
-      }
-      message += `\n`;
-    }
-
-    message += `Total: ${appointments.length} appointments`;
-
     const results = [];
     
-    console.log("📝 Sending Daily Digest:\n", message);
+    // Send individual messages so doctors can forward them
+    for (const appt of appointments) {
+       const dateStr = appt.appointmentDate.toLocaleString('en-US', {
+          month: '2-digit',
+          day: '2-digit',
+          year: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true,
+          timeZone: 'Asia/Kolkata'
+       });
 
-    for (const number of VERIFIED_NUMBERS) {
-      try {
-        await sendSMS(message, number);
-        console.log(`✅ Digest sent to ${number}`);
-        results.push({ number, status: 'sent' });
-      } catch (error) {
-        console.error(`❌ Failed to send digest to ${number}:`, error);
-        results.push({ number, status: 'failed', error: String(error) });
+       const message = `🏥 *Aum Skin Hair Laser Clinic*
+
+👩 *Appointment Reminder:*
+Doctor: ${appt.doctor?.name || "N/A"}
+Patient: ${appt.patient?.name || "N/A"}
+Patient Contact No: ${appt.patient?.contactNo || "N/A"}
+Case Category: ${appt.patient?.caseCategory || "N/A"}
+Date: *${dateStr}*
+Case Description: ${appt.caseDescription || "N/A"}
+
+Please arrive 10 minutes early.`;
+
+       for (const number of VERIFIED_NUMBERS) {
+        try {
+          await sendSMS(message, number);
+          console.log(`✅ Message sent to ${number} for ${appt.patient?.name}`);
+          results.push({ number, status: 'sent', patient: appt.patient?.name });
+        } catch (error) {
+          console.error(`❌ Failed to send to ${number}:`, error);
+          results.push({ number, status: 'failed', error: String(error) });
+        }
       }
     }
 
-    return NextResponse.json({ success: true, results, digest: message });
+    return NextResponse.json({ success: true, results });
 
   } catch (error) {
     console.error('Cron job error:', error);
