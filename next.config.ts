@@ -1,8 +1,9 @@
+import { join } from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
-    "/api/**/*": ["./src/prisma-client/**/*"],
+    "/api/**/*": [join(__dirname, "src", "prisma-client", "**", "*")],
   },
 };
 

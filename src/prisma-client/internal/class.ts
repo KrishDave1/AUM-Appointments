@@ -34,6 +34,10 @@ const config: runtime.GetPrismaClientConfig = {
         "fromEnvVar": null,
         "value": "darwin-arm64",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -56,8 +60,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/prisma-client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Doctor {\n  id             String   @id @default(cuid())\n  name           String\n  email          String?  @unique\n  phone          String\n  specialization String[]\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n\n  appointments Appointment[]\n\n  @@map(\"doctors\")\n}\n\nmodel Patient {\n  id           String       @id @default(cuid())\n  name         String\n  age          Int\n  address      String?\n  caseCategory CaseCategory\n  contactNo    String\n  email        String?\n  createdAt    DateTime     @default(now())\n  updatedAt    DateTime     @updatedAt\n\n  appointments Appointment[]\n\n  @@map(\"patients\")\n}\n\nmodel Appointment {\n  id               String            @id @default(cuid())\n  doctorId         String\n  patientId        String\n  caseDescription  String?\n  appointmentDate  DateTime\n  status           AppointmentStatus @default(SCHEDULED)\n  charge           Decimal?          @db.Decimal(10, 2)\n  notificationSent Boolean           @default(false)\n  createdAt        DateTime          @default(now())\n  updatedAt        DateTime          @updatedAt\n\n  doctor  Doctor  @relation(fields: [doctorId], references: [id], onDelete: Cascade)\n  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)\n\n  @@map(\"appointments\")\n}\n\nenum CaseCategory {\n  HAIR\n  SKIN\n  MOLES\n  HAIR_REMOVAL\n  HYDRAFACIAL\n  WEIGHT_LOSS\n  OTHER\n}\n\nenum AppointmentStatus {\n  SCHEDULED\n  COMPLETED\n  CANCELLED\n  NO_SHOW\n}\n",
-  "inlineSchemaHash": "65ee1c71d8e8b32ece899d2d196ad2fb987ecf5877aa7a37a9835518443182cb",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client\"\n  output        = \"../src/prisma-client\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Doctor {\n  id             String   @id @default(cuid())\n  name           String\n  email          String?  @unique\n  phone          String\n  specialization String[]\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n\n  appointments Appointment[]\n\n  @@map(\"doctors\")\n}\n\nmodel Patient {\n  id           String       @id @default(cuid())\n  name         String\n  age          Int\n  address      String?\n  caseCategory CaseCategory\n  contactNo    String\n  email        String?\n  createdAt    DateTime     @default(now())\n  updatedAt    DateTime     @updatedAt\n\n  appointments Appointment[]\n\n  @@map(\"patients\")\n}\n\nmodel Appointment {\n  id               String            @id @default(cuid())\n  doctorId         String\n  patientId        String\n  caseDescription  String?\n  appointmentDate  DateTime\n  status           AppointmentStatus @default(SCHEDULED)\n  charge           Decimal?          @db.Decimal(10, 2)\n  notificationSent Boolean           @default(false)\n  createdAt        DateTime          @default(now())\n  updatedAt        DateTime          @updatedAt\n\n  doctor  Doctor  @relation(fields: [doctorId], references: [id], onDelete: Cascade)\n  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)\n\n  @@map(\"appointments\")\n}\n\nenum CaseCategory {\n  HAIR\n  SKIN\n  MOLES\n  HAIR_REMOVAL\n  HYDRAFACIAL\n  WEIGHT_LOSS\n  OTHER\n}\n\nenum AppointmentStatus {\n  SCHEDULED\n  COMPLETED\n  CANCELLED\n  NO_SHOW\n}\n",
+  "inlineSchemaHash": "e49046763f087d431cfb21ceafa5b5deecff0cae95edd112d7b95322f20ca68c",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
