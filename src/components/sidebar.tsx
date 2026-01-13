@@ -50,15 +50,7 @@ export default function Sidebar() {
           </Button>
         </Link>
 
-        <Link href="/settings">
-          <Button
-            variant="ghost"
-            className="w-full justify-start text-white hover:bg-gray-800"
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
-          </Button>
-        </Link>
+
       </nav>
 
       <div className="border-t border-gray-700 p-4">

@@ -41,6 +41,7 @@ interface Appointment {
 interface Patient {
   id: string;
   name: string;
+  caseCategory: string;
 }
 
 interface Doctor {

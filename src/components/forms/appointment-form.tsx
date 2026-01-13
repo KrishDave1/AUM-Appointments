@@ -20,6 +20,7 @@ import { Plus, X } from "lucide-react";
 interface Patient {
   id: string;
   name: string;
+  caseCategory: string;
 }
 
 interface Doctor {
@@ -49,6 +50,7 @@ export default function AppointmentForm({
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<AppointmentFormData>({
     resolver: zodResolver(appointmentSchema),
     defaultValues: initialData
@@ -114,6 +116,24 @@ export default function AppointmentForm({
                   {errors.patientId.message}
                 </p>
               )}
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
+                Case Category
+              </label>
+              <input
+                type="text"
+                disabled
+                value={
+                  patients.find((p) => p.id === watch("patientId"))?.caseCategory ||
+                  ""
+                }
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-gray-50 text-gray-500 cursor-not-allowed"
+                placeholder="Auto-filled from patient profile"
+              />
             </div>
 
             <div>
