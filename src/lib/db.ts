@@ -21,15 +21,25 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export const getTodaysAppointments = async () => {
-  const today = new Date();
-  const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-  const endOfDay = new Date(today.setHours(23, 59, 59, 999));
+  const istString = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+  });
+  const istDate = new Date(istString);
+
+  const year = istDate.getFullYear();
+  const month = istDate.getMonth();
+  const date = istDate.getDate();
+
+  const startOfDayUTC = new Date(Date.UTC(year, month, date, -5, -30, 0, 0));
+  const endOfDayUTC = new Date(
+    Date.UTC(year, month, date, 23 - 5, 59 - 30, 59, 999),
+  );
 
   return await prisma.appointment.findMany({
     where: {
       appointmentDate: {
-        gte: startOfDay,
-        lte: endOfDay,
+        gte: startOfDayUTC,
+        lte: endOfDayUTC,
       },
     },
     include: {
@@ -43,30 +53,35 @@ export const getTodaysAppointments = async () => {
 };
 
 export const getTomorrowsAppointments = async () => {
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
+  const istString = new Date().toLocaleString("en-US", {
+    timeZone: "Asia/Kolkata",
+  });
+  const istDate = new Date(istString);
+  istDate.setDate(istDate.getDate() + 1);
 
-  const startOfDay = new Date(tomorrow.setHours(0, 0, 0, 0));
-  const endOfDay = new Date(tomorrow.setHours(23, 59, 59, 999));
+  const year = istDate.getFullYear();
+  const month = istDate.getMonth();
+  const date = istDate.getDate();
+
+  const startOfDayUTC = new Date(Date.UTC(year, month, date, -5, -30, 0, 0));
+  const endOfDayUTC = new Date(
+    Date.UTC(year, month, date, 23 - 5, 59 - 30, 59, 999),
+  );
 
   return await prisma.appointment.findMany({
     where: {
       appointmentDate: {
-        gte: startOfDay,
-        lte: endOfDay,
+        gte: startOfDayUTC,
+        lte: endOfDayUTC,
       },
       status: {
-        not: "CANCELLED"
-      }
+        not: "CANCELLED",
+      },
     },
     include: {
       doctor: true,
       patient: true,
     },
-    orderBy: [
-      { doctor: { name: 'asc' } },
-      { appointmentDate: 'asc' }
-    ],
+    orderBy: [{ doctor: { name: "asc" } }, { appointmentDate: "asc" }],
   });
 };
